@@ -1,0 +1,144 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "Norma Bot/1.0.0": {
+        "dependencies": {
+          "Fluxer.Net": "3.5.1"
+        },
+        "runtime": {
+          "Norma Bot.dll": {}
+        }
+      },
+      "Fluxer.Net/3.5.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.4",
+          "Websocket.Client": "5.5.0",
+          "Serilog": "4.4.0",
+          "Serilog.Sinks.Console": "6.1.1"
+        },
+        "runtime": {
+          "lib/net10.0/Fluxer.Net.dll": {
+            "assemblyVersion": "3.5.1.0",
+            "fileVersion": "3.5.1.0"
+          }
+        }
+      },
+      "Microsoft.IO.RecyclableMemoryStream/3.0.1": {
+        "runtime": {
+          "lib/net6.0/Microsoft.IO.RecyclableMemoryStream.dll": {
+            "assemblyVersion": "3.0.1.0",
+            "fileVersion": "3.0.1.0"
+          }
+        }
+      },
+      "Newtonsoft.Json/13.0.4": {
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.4.30916"
+          }
+        }
+      },
+      "Serilog/4.4.0": {
+        "runtime": {
+          "lib/net10.0/Serilog.dll": {
+            "assemblyVersion": "4.4.0.0",
+            "fileVersion": "4.4.0.0"
+          }
+        }
+      },
+      "Serilog.Sinks.Console/6.1.1": {
+        "dependencies": {
+          "Serilog": "4.4.0"
+        },
+        "runtime": {
+          "lib/net8.0/Serilog.Sinks.Console.dll": {
+            "assemblyVersion": "6.1.1.0",
+            "fileVersion": "6.1.1.0"
+          }
+        }
+      },
+      "System.Reactive/6.1.0": {
+        "runtime": {
+          "lib/net6.0/System.Reactive.dll": {
+            "assemblyVersion": "6.1.0.0",
+            "fileVersion": "6.1.0.62682"
+          }
+        }
+      },
+      "Websocket.Client/5.5.0": {
+        "dependencies": {
+          "Microsoft.IO.RecyclableMemoryStream": "3.0.1",
+          "System.Reactive": "6.1.0"
+        },
+        "runtime": {
+          "lib/net10.0/Websocket.Client.dll": {
+            "assemblyVersion": "5.5.0.0",
+            "fileVersion": "5.5.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Norma Bot/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fluxer.Net/3.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-doboBOzXZCOvXR8Oh3zYTU4XuZPUZfI3yzhM0UDYHvOgN1plGU66VsxlUc1Sl0FBaXi7ulGsqqYhQpGHPoAUag==",
+      "path": "fluxer.net/3.5.1",
+      "hashPath": "fluxer.net.3.5.1.nupkg.sha512"
+    },
+    "Microsoft.IO.RecyclableMemoryStream/3.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-s/s20YTVY9r9TPfTrN5g8zPF1YhwxyqO6PxUkrYTGI2B+OGPe9AdajWZrLhFqXIvqIW23fnUE4+ztrUWNU1+9g==",
+      "path": "microsoft.io.recyclablememorystream/3.0.1",
+      "hashPath": "microsoft.io.recyclablememorystream.3.0.1.nupkg.sha512"
+    },
+    "Newtonsoft.Json/13.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A==",
+      "path": "newtonsoft.json/13.0.4",
+      "hashPath": "newtonsoft.json.13.0.4.nupkg.sha512"
+    },
+    "Serilog/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZC6Le3rr4TVJJjS4KsQAesxeF1EhW9qcZmmG7eP5Y2G3+gTGkJEUXkq4+tZNPtyp05I0wWOxnIjwtxFweJsObw==",
+      "path": "serilog/4.4.0",
+      "hashPath": "serilog.4.4.0.nupkg.sha512"
+    },
+    "Serilog.Sinks.Console/6.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8jbqgjUyZlfCuSTaJk6lOca465OndqOz3KZP6Cryt/IqZYybyBu7GP0fE/AXBzrrQB3EBmQntBFAvMVz1COvAA==",
+      "path": "serilog.sinks.console/6.1.1",
+      "hashPath": "serilog.sinks.console.6.1.1.nupkg.sha512"
+    },
+    "System.Reactive/6.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-M5cCC1ZMkZr9jbSQGTHnVkb5TDN67qWCV7AP8TAHdGkvDlu0puT5NzemESNn9+HkYIDpWpocP68/i+/ame2/2w==",
+      "path": "system.reactive/6.1.0",
+      "hashPath": "system.reactive.6.1.0.nupkg.sha512"
+    },
+    "Websocket.Client/5.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xJ5pTXiNSfwOzJVFcrUF1JROo63zjETJgIA4+ik/JxOJdNEv15e3NZ6bgpNQkyWhapcedP5HCa96hn9YCXwenw==",
+      "path": "websocket.client/5.5.0",
+      "hashPath": "websocket.client.5.5.0.nupkg.sha512"
+    }
+  }
+}

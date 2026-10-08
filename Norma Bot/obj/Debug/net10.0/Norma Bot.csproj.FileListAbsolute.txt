@@ -1,0 +1,24 @@
+E:\Bots\Norma Bot\Norma Bot\bin\Debug\net10.0\Norma Bot.exe
+E:\Bots\Norma Bot\Norma Bot\bin\Debug\net10.0\Norma Bot.deps.json
+E:\Bots\Norma Bot\Norma Bot\bin\Debug\net10.0\Norma Bot.runtimeconfig.json
+E:\Bots\Norma Bot\Norma Bot\bin\Debug\net10.0\Norma Bot.dll
+E:\Bots\Norma Bot\Norma Bot\bin\Debug\net10.0\Norma Bot.pdb
+E:\Bots\Norma Bot\Norma Bot\bin\Debug\net10.0\Fluxer.Net.dll
+E:\Bots\Norma Bot\Norma Bot\bin\Debug\net10.0\Microsoft.IO.RecyclableMemoryStream.dll
+E:\Bots\Norma Bot\Norma Bot\bin\Debug\net10.0\Newtonsoft.Json.dll
+E:\Bots\Norma Bot\Norma Bot\bin\Debug\net10.0\Serilog.dll
+E:\Bots\Norma Bot\Norma Bot\bin\Debug\net10.0\Serilog.Sinks.Console.dll
+E:\Bots\Norma Bot\Norma Bot\bin\Debug\net10.0\System.Reactive.dll
+E:\Bots\Norma Bot\Norma Bot\bin\Debug\net10.0\Websocket.Client.dll
+E:\Bots\Norma Bot\Norma Bot\obj\Debug\net10.0\Norma Bot.csproj.AssemblyReference.cache
+E:\Bots\Norma Bot\Norma Bot\obj\Debug\net10.0\Norma Bot.GeneratedMSBuildEditorConfig.editorconfig
+E:\Bots\Norma Bot\Norma Bot\obj\Debug\net10.0\Norma Bot.AssemblyInfoInputs.cache
+E:\Bots\Norma Bot\Norma Bot\obj\Debug\net10.0\Norma Bot.AssemblyInfo.cs
+E:\Bots\Norma Bot\Norma Bot\obj\Debug\net10.0\Norma Bot.csproj.CoreCompileInputs.cache
+E:\Bots\Norma Bot\Norma Bot\obj\Debug\net10.0\Norma Bot.csproj.Up2Date
+E:\Bots\Norma Bot\Norma Bot\obj\Debug\net10.0\Norma Bot.dll
+E:\Bots\Norma Bot\Norma Bot\obj\Debug\net10.0\refint\Norma Bot.dll
+E:\Bots\Norma Bot\Norma Bot\obj\Debug\net10.0\Norma Bot.pdb
+E:\Bots\Norma Bot\Norma Bot\obj\Debug\net10.0\Norma Bot.genruntimeconfig.cache
+E:\Bots\Norma Bot\Norma Bot\obj\Debug\net10.0\ref\Norma Bot.dll
+E:\Bots\Norma Bot\Norma Bot\bin\Debug\net10.0\appsettings.json

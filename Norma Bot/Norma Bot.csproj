@@ -6,6 +6,7 @@
     <RootNamespace>Norma_Bot</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UserSecretsId>1e491f6d-5a4e-4adf-bb5e-fc8cd2814a2e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

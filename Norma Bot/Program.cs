@@ -11,9 +11,7 @@ public class Program
     public static async Task Main()
     {
         var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-
-            .AddJsonFile("appsettings.json")
+            .AddEnvironmentVariables()
             .Build();
 
         string token = configuration["Fluxer:Token"]

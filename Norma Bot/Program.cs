@@ -77,7 +77,7 @@ public class Program
             var result = await _commands.ExecuteAsync(context, prefix.Length);
 
             if (!result.IsSuccess)
-                Console.WriteLine($"Command failed: {result.ErrorType}");
+                Console.WriteLine($"Command failed: {result.ErrorReason}");
         };
 
         await _client.StartAsync();

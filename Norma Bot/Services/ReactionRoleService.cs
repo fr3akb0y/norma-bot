@@ -78,8 +78,8 @@ public sealed class ReactionRoleService
     {
         try
         {
-            if (!TryReadReaction(reaction, out var guildId, out var messageId,
-                    out var userId, out var emojiKey))
+            if (!TryReadReaction(reaction, out ulong guildId, out ulong messageId,
+                    out ulong userId, out string emojiKey))
             {
                 return;
             }

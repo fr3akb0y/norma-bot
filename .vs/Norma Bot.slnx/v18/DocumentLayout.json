@@ -3,6 +3,26 @@
   "WorkspaceRootPath": "E:\\Bots\\norma-bot\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\models\\hoyoverse\\hoyoversenotificationconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\models\\hoyoverse\\hoyoversenotificationconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\models\\hoyoverse\\hoyoverseevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\models\\hoyoverse\\hoyoverseevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\models\\hoyoverse\\hoyoversecode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\models\\hoyoverse\\hoyoversecode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\models\\reactionrolemessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\models\\reactionrolemessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\models\\reactionrolemapping.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\models\\reactionrolemapping.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -15,8 +35,8 @@
       "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\commands\\generalcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\services\\reactionroleservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\services\\reactionroleservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Bots\\norma-bot\\Norma Bot\\Services\\ReactionRoleServices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Norma Bot\\Services\\ReactionRoleServices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,17 +46,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Program.cs",
               "RelativeDocumentMoniker": "Norma Bot\\Program.cs",
               "ToolTip": "E:\\Bots\\norma-bot\\Norma Bot\\Program.cs",
               "RelativeToolTip": "Norma Bot\\Program.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAowCkAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAACYAAAAAAAAAAAAUwB8AAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-04T19:47:54.829Z",
               "IsPinned": true,
@@ -44,7 +64,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "GeneralCommands.cs",
               "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Commands\\GeneralCommands.cs",
               "RelativeDocumentMoniker": "Norma Bot\\Commands\\GeneralCommands.cs",
@@ -57,7 +77,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "RoleCommands.cs",
               "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Commands\\RoleCommands.cs",
               "RelativeDocumentMoniker": "Norma Bot\\Commands\\RoleCommands.cs",
@@ -67,6 +87,71 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-13T19:53:12.555Z",
               "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HoyoverseNotificationConfig.cs",
+              "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Models\\Hoyoverse\\HoyoverseNotificationConfig.cs",
+              "RelativeDocumentMoniker": "Norma Bot\\Models\\Hoyoverse\\HoyoverseNotificationConfig.cs",
+              "ToolTip": "E:\\Bots\\norma-bot\\Norma Bot\\Models\\Hoyoverse\\HoyoverseNotificationConfig.cs",
+              "RelativeToolTip": "Norma Bot\\Models\\Hoyoverse\\HoyoverseNotificationConfig.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-26T00:06:44.336Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "HoyoverseEvent.cs",
+              "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Models\\Hoyoverse\\HoyoverseEvent.cs",
+              "RelativeDocumentMoniker": "Norma Bot\\Models\\Hoyoverse\\HoyoverseEvent.cs",
+              "ToolTip": "E:\\Bots\\norma-bot\\Norma Bot\\Models\\Hoyoverse\\HoyoverseEvent.cs",
+              "RelativeToolTip": "Norma Bot\\Models\\Hoyoverse\\HoyoverseEvent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-26T00:06:43.127Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HoyoverseCode.cs",
+              "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Models\\Hoyoverse\\HoyoverseCode.cs",
+              "RelativeDocumentMoniker": "Norma Bot\\Models\\Hoyoverse\\HoyoverseCode.cs",
+              "ToolTip": "E:\\Bots\\norma-bot\\Norma Bot\\Models\\Hoyoverse\\HoyoverseCode.cs",
+              "RelativeToolTip": "Norma Bot\\Models\\Hoyoverse\\HoyoverseCode.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-26T00:06:42.247Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ReactionRoleMessage.cs",
+              "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Models\\ReactionRoleMessage.cs",
+              "RelativeDocumentMoniker": "Norma Bot\\Models\\ReactionRoleMessage.cs",
+              "ToolTip": "E:\\Bots\\norma-bot\\Norma Bot\\Models\\ReactionRoleMessage.cs",
+              "RelativeToolTip": "Norma Bot\\Models\\ReactionRoleMessage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-26T00:06:37.928Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ReactionRoleMapping.cs",
+              "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Models\\ReactionRoleMapping.cs",
+              "RelativeDocumentMoniker": "Norma Bot\\Models\\ReactionRoleMapping.cs",
+              "ToolTip": "E:\\Bots\\norma-bot\\Norma Bot\\Models\\ReactionRoleMapping.cs",
+              "RelativeToolTip": "Norma Bot\\Models\\ReactionRoleMapping.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-26T00:06:34.452Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -86,7 +171,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "ReactionRoleServices.cs",
               "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Services\\ReactionRoleServices.cs",
               "RelativeDocumentMoniker": "Norma Bot\\Services\\ReactionRoleServices.cs",

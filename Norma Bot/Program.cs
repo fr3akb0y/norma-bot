@@ -23,9 +23,6 @@ public class Program
         string token = configuration["Fluxer:Token"]
             ?? throw new Exception("Fluxer token is missing.");
 
-        string apiUrl = configuration["Fluxer:ApiUrl"]
-            ?? throw new Exception("Fluxer API URL is missing.");
-
         string? databaseConnectionString = configuration["Database:ConnectionString"]
             ?? configuration["DATABASE_URL"];
 
@@ -34,8 +31,23 @@ public class Program
             Console.WriteLine("No database configured. Using in-memory test storage; data will reset when the bot stops.");
         }
 
-        _client = new FluxerClient("Bot " + token);
-        await _client.LoginAsync(apiUrl);
+        var fluxerConfig = new FluxerConfig
+        {
+            ApiBaseUrl = "https://cunnyverse.moe/api/v{v}/",
+            GatewayUrl = "wss://cunnyverse.moe/gateway",
+            MediaUrl = "https://cunnyverse.moe/media",
+            WebUrl = "https://cunnyverse.moe",
+            StaticUrl = "https://cunnyverse.moe",
+            InviteUrl = "https://cunnyverse.moe/invite",
+            GiftUrl = "https://cunnyverse.moe/gift",
+            AdminUrl = "https://cunnyverse.moe/admin",
+            Version = 1
+        };
+
+        _client = new FluxerClient(
+            "Bot " + token,
+            fluxerConfig
+        );
 
         var reactionRoleRepository = new ReactionRoleRepository(databaseConnectionString);
         await reactionRoleRepository.InitializeAsync();

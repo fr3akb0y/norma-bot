@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "E:\\Bots\\norma-bot\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\commands\\generalcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\commands\\generalcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\commands\\rolecommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\commands\\rolecommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\norma bot.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\norma bot.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\commands\\generalcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\commands\\generalcommands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|e:\\bots\\norma-bot\\norma bot\\services\\reactionroleservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34FCAA99-B278-9369-2D6C-1C5ECBADB40F}|Norma Bot\\Norma Bot.csproj|solutionrelative:norma bot\\services\\reactionroleservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,47 +26,47 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Program.cs",
               "RelativeDocumentMoniker": "Norma Bot\\Program.cs",
               "ToolTip": "E:\\Bots\\norma-bot\\Norma Bot\\Program.cs",
               "RelativeToolTip": "Norma Bot\\Program.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAgwCMAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAowCkAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-04T19:47:54.829Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\appsettings.json",
-              "RelativeDocumentMoniker": "Norma Bot\\appsettings.json",
-              "ToolTip": "E:\\Bots\\norma-bot\\Norma Bot\\appsettings.json",
-              "RelativeToolTip": "Norma Bot\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-10-04T20:02:10.351Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "GeneralCommands.cs",
               "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Commands\\GeneralCommands.cs",
               "RelativeDocumentMoniker": "Norma Bot\\Commands\\GeneralCommands.cs",
               "ToolTip": "E:\\Bots\\norma-bot\\Norma Bot\\Commands\\GeneralCommands.cs",
               "RelativeToolTip": "Norma Bot\\Commands\\GeneralCommands.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAqwAoAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-04T19:52:41.609Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RoleCommands.cs",
+              "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Commands\\RoleCommands.cs",
+              "RelativeDocumentMoniker": "Norma Bot\\Commands\\RoleCommands.cs",
+              "ToolTip": "E:\\Bots\\norma-bot\\Norma Bot\\Commands\\RoleCommands.cs",
+              "RelativeToolTip": "Norma Bot\\Commands\\RoleCommands.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-13T19:53:12.555Z",
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -87,14 +87,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Norma Bot.csproj",
-              "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Norma Bot.csproj",
-              "RelativeDocumentMoniker": "Norma Bot\\Norma Bot.csproj",
-              "ToolTip": "E:\\Bots\\norma-bot\\Norma Bot\\Norma Bot.csproj",
-              "RelativeToolTip": "Norma Bot\\Norma Bot.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-10-04T20:35:08.87Z"
+              "Title": "ReactionRoleServices.cs",
+              "DocumentMoniker": "E:\\Bots\\norma-bot\\Norma Bot\\Services\\ReactionRoleServices.cs",
+              "RelativeDocumentMoniker": "Norma Bot\\Services\\ReactionRoleServices.cs",
+              "ToolTip": "E:\\Bots\\norma-bot\\Norma Bot\\Services\\ReactionRoleServices.cs",
+              "RelativeToolTip": "Norma Bot\\Services\\ReactionRoleServices.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-14T15:57:59.297Z"
             }
           ]
         }

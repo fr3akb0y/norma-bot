@@ -92,7 +92,33 @@ public class Program
                 Console.WriteLine($"Command failed: {result.ErrorReason}");
         };
 
+        _client.Gateway.Connected += () =>
+        {
+            Console.WriteLine("Gateway connected.");
+        };
+
+        _client.Gateway.Ready += data =>
+        {
+            Console.WriteLine("Gateway READY.");
+            Console.WriteLine($"Guilds loaded: {_client.Gateway.Guilds.Count}");
+        };
+
+        _client.Gateway.Disconnected += () =>
+        {
+            Console.WriteLine("Gateway disconnected.");
+        };
+
+        _client.Gateway.HeartbeatAck += () =>
+        {
+            Console.WriteLine("Heartbeat ACK.");
+        };
+
+        Console.WriteLine($"Gateway URL: {fluxerConfig.GatewayUrl}");
+        Console.WriteLine($"API URL: {fluxerConfig.ApiBaseUrl}");
+
         await _client.StartAsync();
+
+        Console.WriteLine("StartAsync completed.");
 
         // The current app is a plain console process rather than a Generic Host, so a
         // PeriodicTimer-style background task is enough. If the app is later migrated to

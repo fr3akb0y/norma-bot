@@ -39,6 +39,8 @@ public class RoleCommands : ModuleBase
             return;
         }
 
+        message = message.Replace("\\n", "\n");
+
         var createdMessage = await BotServices.ReactionRoles.CreateMessageAsync(
             Context.Guild.Id,
             channelId,
@@ -46,7 +48,7 @@ public class RoleCommands : ModuleBase
 
         await ReplyAsync(
             $"Reaction-role message created. Message ID: `{createdMessage.MessageId}`\n" +
-            $"Add a role reaction with: `!addreactionrole {createdMessage.MessageId} 😀 @Role`");
+            $"Add a role reaction with: `!addreactionrole {createdMessage.MessageId} [EMOJI] @Role`");
     }
 
     [Command("addreactionrole")]

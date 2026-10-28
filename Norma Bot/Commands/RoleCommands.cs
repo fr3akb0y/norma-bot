@@ -91,14 +91,26 @@ public class RoleCommands : ModuleBase
 
     private async Task<bool> EnsureAdministratorAsync()
     {
-        if (Context.Member == null ||
-            !Context.Member.HasPermission(GuildPermission.Administrator))
+        if (!IsGuildAdmin())
         {
-            await ReplyAsync("You need the Administrator permission to use this command.");
+            await ReplyAsync(
+                "You need the Administrator permission to use this command."
+            );
             return false;
         }
 
         return true;
+    }
+
+    private bool IsGuildAdmin()
+    {
+        if (Context.Guild == null || Context.Member == null)
+            return false;
+
+        if (Context.Guild.OwnerId == Context.User.Id)
+            return true;
+
+        return Context.Member.HasPermission(GuildPermission.Administrator);
     }
 
     private static bool TryParseMentionId(Regex regex, string value, out ulong id)

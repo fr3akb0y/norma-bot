@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Norma_Bot.Data;
 using Norma_Bot.Services;
 using Norma_Bot.Services.Hoyoverse;
+using Serilog;
 using System.Reflection;
 
 public class Program
@@ -31,6 +32,16 @@ public class Program
             Console.WriteLine("No database configured. Using in-memory test storage; data will reset when the bot stops.");
         }
 
+        var gatewayLogger = new LoggerConfiguration()
+            .MinimumLevel.Warning()
+            .WriteTo.Console()
+            .CreateLogger();
+
+        var restLogger = new LoggerConfiguration()
+            .MinimumLevel.Warning()
+            .WriteTo.Console()
+            .CreateLogger();
+
         var fluxerConfig = new FluxerConfig
         {
             ApiBaseUrl = "https://cunnyverse.moe/api/v{v}/",
@@ -41,17 +52,16 @@ public class Program
             InviteUrl = "https://cunnyverse.moe/invite",
             GiftUrl = "https://cunnyverse.moe/gift",
             AdminUrl = "https://cunnyverse.moe/admin",
-            Version = 1
-        };
+            Version = 1,
 
-        Console.WriteLine($"Config before client: {fluxerConfig.GatewayUrl}");
+            GatewaySerilog = gatewayLogger,
+            RestSerilog = restLogger
+        };
 
         _client = new FluxerClient(
             "Bot " + token,
             fluxerConfig
         );
-
-        Console.WriteLine($"Config after client: {fluxerConfig.GatewayUrl}");
 
         var reactionRoleRepository = new ReactionRoleRepository(databaseConnectionString);
         await reactionRoleRepository.InitializeAsync();

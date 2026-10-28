@@ -34,7 +34,7 @@ public class Program
         var fluxerConfig = new FluxerConfig
         {
             ApiBaseUrl = "https://cunnyverse.moe/api/v{v}/",
-            GatewayUrl = "wss://cunnyverse.moe/gateway",
+            GatewayUrl = "wss://cunnyverse.moe/gateway/?v=1&encoding=json",
             MediaUrl = "https://cunnyverse.moe/media",
             WebUrl = "https://cunnyverse.moe",
             StaticUrl = "https://cunnyverse.moe",
@@ -44,10 +44,14 @@ public class Program
             Version = 1
         };
 
+        Console.WriteLine($"Config before client: {fluxerConfig.GatewayUrl}");
+
         _client = new FluxerClient(
             "Bot " + token,
             fluxerConfig
         );
+
+        Console.WriteLine($"Config after client: {fluxerConfig.GatewayUrl}");
 
         var reactionRoleRepository = new ReactionRoleRepository(databaseConnectionString);
         await reactionRoleRepository.InitializeAsync();

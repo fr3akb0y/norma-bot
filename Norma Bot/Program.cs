@@ -46,7 +46,10 @@ public class Program
 
         Console.WriteLine($"Config before client: {fluxerConfig.GatewayUrl}");
 
-        _client = new FluxerClient(token, fluxerConfig);
+        _client = new FluxerClient(
+            "Bot " + token,
+            fluxerConfig
+        );
 
         Console.WriteLine($"Config after client: {fluxerConfig.GatewayUrl}");
 

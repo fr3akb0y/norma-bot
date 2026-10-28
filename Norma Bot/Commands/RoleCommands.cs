@@ -1,3 +1,4 @@
+using Fluxer.Net;
 using Fluxer.Net.Commands;
 using Norma_Bot.Services;
 using System.Text.RegularExpressions;
@@ -90,11 +91,14 @@ public class RoleCommands : ModuleBase
 
     private async Task<bool> EnsureAdministratorAsync()
     {
-        if (Context.Member?.GuildPermissions.Administrator == true)
-            return true;
+        if (Context.Member == null ||
+            !Context.Member.HasPermission(GuildPermission.Administrator))
+        {
+            await ReplyAsync("You need the Administrator permission to use this command.");
+            return false;
+        }
 
-        await ReplyAsync("You need the Administrator permission to use this command.");
-        return false;
+        return true;
     }
 
     private static bool TryParseMentionId(Regex regex, string value, out ulong id)

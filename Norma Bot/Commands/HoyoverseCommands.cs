@@ -16,7 +16,9 @@ public class HoyoverseCommands : ModuleBase
 
     [Command("setuphoyo")]
     public async Task SetupHoyoverseAsync(
-        string channel,
+        string genshinChannel,
+        string starRailChannel,
+        string zenlessChannel,
         string genshinRole,
         string starRailRole,
         string zenlessRole)
@@ -30,35 +32,42 @@ public class HoyoverseCommands : ModuleBase
             return;
         }
 
-        if (!TryParseMentionId(ChannelMentionRegex, channel, out var channelId) ||
-            !Context.Guild.Channels.ContainsKey(channelId))
+        // Channels
+        if (!TryGetChannelId(genshinChannel, out var genshinChannelId) ||
+            !TryGetChannelId(starRailChannel, out var starRailChannelId) ||
+            !TryGetChannelId(zenlessChannel, out var zenlessChannelId))
         {
-            await ReplyAsync("Please mention a channel from this server.");
+            await ReplyAsync("Please mention all three announcement channels.");
             return;
         }
 
-        if (!TryParseMentionId(RoleMentionRegex, genshinRole, out var genshinRoleId) ||
-            !Context.Guild.Roles.ContainsKey(genshinRoleId) ||
-            !TryParseMentionId(RoleMentionRegex, starRailRole, out var starRailRoleId) ||
-            !Context.Guild.Roles.ContainsKey(starRailRoleId) ||
-            !TryParseMentionId(RoleMentionRegex, zenlessRole, out var zenlessRoleId) ||
-            !Context.Guild.Roles.ContainsKey(zenlessRoleId))
+        if (!TryGetRoleId(genshinRole, out var genshinRoleId) ||
+            !TryGetRoleId(starRailRole, out var starRailRoleId) ||
+            !TryGetRoleId(zenlessRole, out var zenlessRoleId))
         {
-            await ReplyAsync("Please mention all three roles. Example: `!setuphoyo #notifications @Genshin @StarRail @Zenless`");
+            await ReplyAsync("Please mention all three game roles.");
             return;
         }
 
         await BotServices.HoyoverseRepository.SaveConfigAsync(
             new HoyoverseNotificationConfig(
                 Context.Guild.Id,
-                channelId,
+
+                genshinChannelId,
+                starRailChannelId,
+                zenlessChannelId,
+
                 genshinRoleId,
                 starRailRoleId,
-                zenlessRoleId));
+                zenlessRoleId
+            ));
 
         await ReplyAsync(
-            "HoYoverse notifications configured. The bot will check events and codes automatically. " +
-            "The first code fetch only seeds the current active-code snapshot, so existing codes are not spammed immediately.");
+            "HoYoverse notifications configured.\n" +
+            $"Genshin Impact → <#{genshinChannelId}>\n" +
+            $"Honkai: Star Rail → <#{starRailChannelId}>\n" +
+            $"Zenless Zone Zero → <#{zenlessChannelId}>"
+        );
     }
 
     [Command("checkhoyo")]
@@ -101,5 +110,29 @@ public class HoyoverseCommands : ModuleBase
         id = 0;
         var match = regex.Match(value.Trim());
         return match.Success && ulong.TryParse(match.Groups["id"].Value, out id);
+    }
+
+    private bool TryGetChannelId(string mention, out ulong channelId)
+    {
+        channelId = 0;
+
+        return Context.Guild is not null &&
+               TryParseMentionId(
+                   ChannelMentionRegex,
+                   mention,
+                   out channelId) &&
+               Context.Guild.Channels.ContainsKey(channelId);
+    }
+
+    private bool TryGetRoleId(string mention, out ulong roleId)
+    {
+        roleId = 0;
+
+        return Context.Guild is not null &&
+               TryParseMentionId(
+                   RoleMentionRegex,
+                   mention,
+                   out roleId) &&
+               Context.Guild.Roles.ContainsKey(roleId);
     }
 }

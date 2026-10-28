@@ -11,9 +11,23 @@ public sealed class HoyoverseNotificationService
 
     private static readonly GameDefinition[] Games =
     [
-        new("genshin", "Genshin Impact", c => c.GenshinRoleId),
-        new("starrail", "Honkai: Star Rail", c => c.StarRailRoleId),
-        new("zenless", "Zenless Zone Zero", c => c.ZenlessRoleId)
+        new(
+            "genshin",
+            "Genshin Impact",
+            c => c.GenshinRoleId,
+            c => c.GenshinChannelId),
+
+        new(
+            "starrail",
+            "Honkai: Star Rail",
+            c => c.StarRailRoleId,
+            c => c.StarRailChannelId),
+
+        new(
+            "zenless",
+            "Zenless Zone Zero",
+            c => c.ZenlessRoleId,
+            c => c.ZenlessChannelId)
     ];
 
     private readonly FluxerClient _client;
@@ -99,7 +113,7 @@ public sealed class HoyoverseNotificationService
                     : string.Empty;
 
                 await _client.Rest.SendMessageAsync(
-                    config.ChannelId,
+                    game.ChannelSelector(config),
                     $"<@&{game.RoleSelector(config)}> **New {game.DisplayName} redemption code:** `{code.Code}`{rewards}");
             }
         }
@@ -143,7 +157,7 @@ public sealed class HoyoverseNotificationService
                 : $"{Math.Max(1, Math.Ceiling(remaining.TotalHours)):0} hour(s)";
 
             await _client.Rest.SendMessageAsync(
-                config.ChannelId,
+                game.ChannelSelector(config),
                 $"<@&{game.RoleSelector(config)}> **{gameEvent.Name}** in {game.DisplayName} ends in about {remainingText}. " +
                 $"Make sure you finish it and claim your rewards before it ends.");
 
@@ -154,5 +168,6 @@ public sealed class HoyoverseNotificationService
     private sealed record GameDefinition(
         string Slug,
         string DisplayName,
-        Func<HoyoverseNotificationConfig, ulong> RoleSelector);
+        Func<HoyoverseNotificationConfig, ulong> RoleSelector,
+        Func<HoyoverseNotificationConfig, ulong> ChannelSelector);
 }

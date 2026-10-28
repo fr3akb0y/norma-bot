@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Norma Bot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d2eb3abb1dddc52344adbf4ad232cc4676b19c1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+87ca93cdb6e7c14960147b96a3659f099693250d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Norma Bot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Norma Bot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

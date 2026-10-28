@@ -27,36 +27,47 @@ public sealed class HoyoverseRepository
             return;
 
         const string sql = """
-            CREATE TABLE IF NOT EXISTS hoyoverse_notification_config
-            (
-                guild_id TEXT PRIMARY KEY,
-                channel_id TEXT NOT NULL,
-                genshin_role_id TEXT NOT NULL,
-                starrail_role_id TEXT NOT NULL,
-                zenless_role_id TEXT NOT NULL
-            );
+        CREATE TABLE IF NOT EXISTS hoyoverse_notification_config
+        (
+            guild_id TEXT PRIMARY KEY,
+            genshin_channel_id TEXT NOT NULL,
+            star_rail_channel_id TEXT NOT NULL,
+            zenless_channel_id TEXT NOT NULL,
+            genshin_role_id TEXT NOT NULL,
+            starrail_role_id TEXT NOT NULL,
+            zenless_role_id TEXT NOT NULL
+        );
 
-            CREATE TABLE IF NOT EXISTS hoyoverse_codes
-            (
-                game TEXT NOT NULL,
-                code TEXT NOT NULL,
-                PRIMARY KEY (game, code)
-            );
+        ALTER TABLE hoyoverse_notification_config
+            ADD COLUMN IF NOT EXISTS genshin_channel_id TEXT;
 
-            CREATE TABLE IF NOT EXISTS hoyoverse_code_state
-            (
-                game TEXT PRIMARY KEY,
-                initialized BOOLEAN NOT NULL
-            );
+        ALTER TABLE hoyoverse_notification_config
+            ADD COLUMN IF NOT EXISTS star_rail_channel_id TEXT;
 
-            CREATE TABLE IF NOT EXISTS hoyoverse_event_warnings
-            (
-                game TEXT NOT NULL,
-                event_id TEXT NOT NULL,
-                end_unix BIGINT NOT NULL,
-                PRIMARY KEY (game, event_id, end_unix)
-            );
-            """;
+        ALTER TABLE hoyoverse_notification_config
+            ADD COLUMN IF NOT EXISTS zenless_channel_id TEXT;
+
+        CREATE TABLE IF NOT EXISTS hoyoverse_codes
+        (
+            game TEXT NOT NULL,
+            code TEXT NOT NULL,
+            PRIMARY KEY (game, code)
+        );
+
+        CREATE TABLE IF NOT EXISTS hoyoverse_code_state
+        (
+            game TEXT PRIMARY KEY,
+            initialized BOOLEAN NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS hoyoverse_event_warnings
+        (
+            game TEXT NOT NULL,
+            event_id TEXT NOT NULL,
+            end_unix BIGINT NOT NULL,
+            PRIMARY KEY (game, event_id, end_unix)
+        );
+        """;
 
         await using var connection = new NpgsqlConnection(_connectionString);
         await connection.OpenAsync();
@@ -73,24 +84,68 @@ public sealed class HoyoverseRepository
         }
 
         const string sql = """
-            INSERT INTO hoyoverse_notification_config
-                (guild_id, channel_id, genshin_role_id, starrail_role_id, zenless_role_id)
-            VALUES (@guild, @channel, @genshin, @starrail, @zenless)
-            ON CONFLICT (guild_id) DO UPDATE SET
-                channel_id = EXCLUDED.channel_id,
-                genshin_role_id = EXCLUDED.genshin_role_id,
-                starrail_role_id = EXCLUDED.starrail_role_id,
-                zenless_role_id = EXCLUDED.zenless_role_id;
-            """;
+        INSERT INTO hoyoverse_notification_config
+            (
+                guild_id,
+                genshin_channel_id,
+                star_rail_channel_id,
+                zenless_channel_id,
+                genshin_role_id,
+                starrail_role_id,
+                zenless_role_id
+            )
+        VALUES
+            (
+                @guild,
+                @genshinChannel,
+                @starRailChannel,
+                @zenlessChannel,
+                @genshinRole,
+                @starRailRole,
+                @zenlessRole
+            )
+        ON CONFLICT (guild_id) DO UPDATE SET
+            genshin_channel_id = EXCLUDED.genshin_channel_id,
+            star_rail_channel_id = EXCLUDED.star_rail_channel_id,
+            zenless_channel_id = EXCLUDED.zenless_channel_id,
+            genshin_role_id = EXCLUDED.genshin_role_id,
+            starrail_role_id = EXCLUDED.starrail_role_id,
+            zenless_role_id = EXCLUDED.zenless_role_id;
+        """;
 
         await using var connection = new NpgsqlConnection(_connectionString);
         await connection.OpenAsync();
+
         await using var command = new NpgsqlCommand(sql, connection);
-        command.Parameters.AddWithValue("guild", config.GuildId.ToString());
-        command.Parameters.AddWithValue("channel", config.ChannelId.ToString());
-        command.Parameters.AddWithValue("genshin", config.GenshinRoleId.ToString());
-        command.Parameters.AddWithValue("starrail", config.StarRailRoleId.ToString());
-        command.Parameters.AddWithValue("zenless", config.ZenlessRoleId.ToString());
+
+        command.Parameters.AddWithValue(
+            "guild",
+            config.GuildId.ToString());
+
+        command.Parameters.AddWithValue(
+            "genshinChannel",
+            config.GenshinChannelId.ToString());
+
+        command.Parameters.AddWithValue(
+            "starRailChannel",
+            config.StarRailChannelId.ToString());
+
+        command.Parameters.AddWithValue(
+            "zenlessChannel",
+            config.ZenlessChannelId.ToString());
+
+        command.Parameters.AddWithValue(
+            "genshinRole",
+            config.GenshinRoleId.ToString());
+
+        command.Parameters.AddWithValue(
+            "starRailRole",
+            config.StarRailRoleId.ToString());
+
+        command.Parameters.AddWithValue(
+            "zenlessRole",
+            config.ZenlessRoleId.ToString());
+
         await command.ExecuteNonQueryAsync();
     }
 
@@ -100,15 +155,29 @@ public sealed class HoyoverseRepository
             return _memoryConfig;
 
         const string sql = """
-            SELECT guild_id, channel_id, genshin_role_id, starrail_role_id, zenless_role_id
-            FROM hoyoverse_notification_config
-            LIMIT 1;
-            """;
+        SELECT
+            guild_id,
+            genshin_channel_id,
+            star_rail_channel_id,
+            zenless_channel_id,
+            genshin_role_id,
+            starrail_role_id,
+            zenless_role_id
+        FROM hoyoverse_notification_config
+        LIMIT 1;
+        """;
 
-        await using var connection = new NpgsqlConnection(_connectionString);
+        await using var connection =
+            new NpgsqlConnection(_connectionString);
+
         await connection.OpenAsync();
-        await using var command = new NpgsqlCommand(sql, connection);
-        await using var reader = await command.ExecuteReaderAsync();
+
+        await using var command =
+            new NpgsqlCommand(sql, connection);
+
+        await using var reader =
+            await command.ExecuteReaderAsync();
+
         if (!await reader.ReadAsync())
             return null;
 
@@ -117,7 +186,9 @@ public sealed class HoyoverseRepository
             ulong.Parse(reader.GetString(1)),
             ulong.Parse(reader.GetString(2)),
             ulong.Parse(reader.GetString(3)),
-            ulong.Parse(reader.GetString(4)));
+            ulong.Parse(reader.GetString(4)),
+            ulong.Parse(reader.GetString(5)),
+            ulong.Parse(reader.GetString(6)));
     }
 
     public async Task<bool> IsCodeStateInitializedAsync(string game)

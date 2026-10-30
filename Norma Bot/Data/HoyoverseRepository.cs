@@ -351,4 +351,49 @@ public sealed class HoyoverseRepository
         };
         return builder.ConnectionString;
     }
+
+    public async Task<List<HoyoverseNotificationConfig>> GetAllConfigsAsync()
+    {
+        if (_connectionString is null)
+            return _memoryConfigs.Values.ToList();
+    
+        const string sql = """
+            SELECT
+                guild_id,
+                genshin_channel_id,
+                star_rail_channel_id,
+                zenless_channel_id,
+                genshin_role_id,
+                starrail_role_id,
+                zenless_role_id
+            FROM hoyoverse_notification_config;
+            """;
+    
+        var result = new List<HoyoverseNotificationConfig>();
+    
+        await using var connection =
+            new NpgsqlConnection(_connectionString);
+    
+        await connection.OpenAsync();
+    
+        await using var command =
+            new NpgsqlCommand(sql, connection);
+    
+        await using var reader =
+            await command.ExecuteReaderAsync();
+    
+        while (await reader.ReadAsync())
+        {
+            result.Add(new HoyoverseNotificationConfig(
+                ulong.Parse(reader.GetString(0)),
+                ulong.Parse(reader.GetString(1)),
+                ulong.Parse(reader.GetString(2)),
+                ulong.Parse(reader.GetString(3)),
+                ulong.Parse(reader.GetString(4)),
+                ulong.Parse(reader.GetString(5)),
+                ulong.Parse(reader.GetString(6))));
+        }
+    
+        return result;
+    }
 }

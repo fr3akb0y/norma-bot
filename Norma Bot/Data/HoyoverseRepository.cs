@@ -7,7 +7,8 @@ namespace Norma_Bot.Data;
 public sealed class HoyoverseRepository
 {
     private readonly string? _connectionString;
-    private HoyoverseNotificationConfig? _memoryConfig;
+    private readonly ConcurrentDictionary<ulong, HoyoverseNotificationConfig>
+    _memoryConfigs = new();
     private readonly ConcurrentDictionary<(string Game, string Code), byte> _memoryCodes = new();
     private readonly ConcurrentDictionary<string, byte> _memoryInitializedGames = new();
     private readonly ConcurrentDictionary<(string Game, string EventId, long EndUnix), byte> _memoryEventWarnings = new();
@@ -79,7 +80,7 @@ public sealed class HoyoverseRepository
     {
         if (_connectionString is null)
         {
-            _memoryConfig = config;
+            _memoryConfigs[config.GuildId] = config;
             return;
         }
 
@@ -149,10 +150,14 @@ public sealed class HoyoverseRepository
         await command.ExecuteNonQueryAsync();
     }
 
-    public async Task<HoyoverseNotificationConfig?> GetConfigAsync()
+    public async Task<HoyoverseNotificationConfig?> GetConfigAsync(ulong guildId)
     {
         if (_connectionString is null)
-            return _memoryConfig;
+        {
+            return _memoryConfigs.TryGetValue(guildId, out var config)
+                ? config
+                : null;
+        }
 
         const string sql = """
         SELECT
@@ -164,23 +169,27 @@ public sealed class HoyoverseRepository
             starrail_role_id,
             zenless_role_id
         FROM hoyoverse_notification_config
-        LIMIT 1;
+        WHERE guild_id = @guildId;
         """;
 
         await using var connection =
             new NpgsqlConnection(_connectionString);
-
+        
         await connection.OpenAsync();
-
+        
         await using var command =
             new NpgsqlCommand(sql, connection);
-
+        
+        command.Parameters.AddWithValue(
+            "guildId",
+            guildId.ToString());
+        
         await using var reader =
             await command.ExecuteReaderAsync();
-
+        
         if (!await reader.ReadAsync())
             return null;
-
+        
         return new HoyoverseNotificationConfig(
             ulong.Parse(reader.GetString(0)),
             ulong.Parse(reader.GetString(1)),

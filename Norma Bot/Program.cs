@@ -122,11 +122,6 @@ public class Program
             Console.WriteLine("Gateway disconnected.");
         };
 
-        _client.Gateway.HeartbeatAck += () =>
-        {
-            Console.WriteLine("Heartbeat ACK.");
-        };
-
         Console.WriteLine($"Gateway URL: {fluxerConfig.GatewayUrl}");
         Console.WriteLine($"API URL: {fluxerConfig.ApiBaseUrl}");
 

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "h9DF20Yzwcc=",
+  "dgSpecHash": "DOfUcX+Z2Qk=",
   "success": true,
-  "projectFilePath": "E:\\Bots\\norma-bot\\Norma Bot\\Norma Bot.csproj",
+  "projectFilePath": "E:\\Norma Projects\\norma-bot\\Norma Bot\\Norma Bot.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kaiww\\.nuget\\packages\\fluxer.net\\3.5.1\\fluxer.net.3.5.1.nupkg.sha512",
     "C:\\Users\\kaiww\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.0\\microsoft.extensions.configuration.10.0.0.nupkg.sha512",

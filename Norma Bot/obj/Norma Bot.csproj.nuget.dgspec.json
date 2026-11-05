@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Bots\\norma-bot\\Norma Bot\\Norma Bot.csproj": {}
+    "E:\\Norma Projects\\norma-bot\\Norma Bot\\Norma Bot.csproj": {}
   },
   "projects": {
-    "E:\\Bots\\norma-bot\\Norma Bot\\Norma Bot.csproj": {
+    "E:\\Norma Projects\\norma-bot\\Norma Bot\\Norma Bot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Bots\\norma-bot\\Norma Bot\\Norma Bot.csproj",
+        "projectUniqueName": "E:\\Norma Projects\\norma-bot\\Norma Bot\\Norma Bot.csproj",
         "projectName": "Norma Bot",
-        "projectPath": "E:\\Bots\\norma-bot\\Norma Bot\\Norma Bot.csproj",
+        "projectPath": "E:\\Norma Projects\\norma-bot\\Norma Bot\\Norma Bot.csproj",
         "packagesPath": "C:\\Users\\kaiww\\.nuget\\packages\\",
-        "outputPath": "E:\\Bots\\norma-bot\\Norma Bot\\obj\\",
+        "outputPath": "E:\\Norma Projects\\norma-bot\\Norma Bot\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -90,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.403/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

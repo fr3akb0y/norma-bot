@@ -46,7 +46,8 @@ public sealed class HoyoverseNotificationService
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
-        // Give the gateway a short moment to finish connecting before the first notification pass.
+        // Give the gateway a short moment to finish connecting
+        // before the first notification pass.
         await Task.Delay(TimeSpan.FromSeconds(10), cancellationToken);
 
         while (!cancellationToken.IsCancellationRequested)
@@ -55,113 +56,177 @@ public sealed class HoyoverseNotificationService
             {
                 await CheckAsync(cancellationToken);
             }
-            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            catch (OperationCanceledException)
+                when (cancellationToken.IsCancellationRequested)
             {
                 break;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"HoYoverse notification check failed: {ex.GetType().Name}");
+                Console.WriteLine(
+                    $"HoYoverse notification check failed: " +
+                    $"{ex.GetType().Name}: {ex.Message}");
             }
 
             await Task.Delay(PollInterval, cancellationToken);
         }
     }
 
-    public async Task CheckAsync(CancellationToken cancellationToken = default)
+    public async Task CheckAsync(
+        CancellationToken cancellationToken = default)
     {
-        var config = await _repository.GetConfigAsync();
-        if (config is null)
+        var configs = await _repository.GetAllConfigsAsync();
+
+        if (configs.Count == 0)
             return;
 
         foreach (var game in Games)
         {
-            await CheckCodesAsync(config, game, cancellationToken);
-            await CheckEventsAsync(config, game, cancellationToken);
+            await CheckCodesAsync(
+                configs,
+                game,
+                cancellationToken);
+
+            await CheckEventsAsync(
+                configs,
+                game,
+                cancellationToken);
         }
 
-        await _repository.CleanupEventWarningsAsync(DateTimeOffset.UtcNow.AddDays(-7));
+        await _repository.CleanupEventWarningsAsync(
+            DateTimeOffset.UtcNow.AddDays(-7));
     }
 
     private async Task CheckCodesAsync(
-        HoyoverseNotificationConfig config,
+        IReadOnlyCollection<HoyoverseNotificationConfig> configs,
         GameDefinition game,
         CancellationToken cancellationToken)
     {
         IReadOnlyList<HoyoverseCode> currentCodes;
+
         try
         {
-            currentCodes = await _apiClient.GetActiveCodesAsync(game.Slug, cancellationToken);
+            currentCodes = await _apiClient.GetActiveCodesAsync(
+                game.Slug,
+                cancellationToken);
         }
         catch (Exception ex)
         {
-            // A failed/invalid fetch must never wipe the stored snapshot.
-            Console.WriteLine($"HoYoverse code fetch failed for {game.Slug}: {ex.GetType().Name}");
+            // A failed/invalid fetch must never wipe
+            // the stored snapshot.
+            Console.WriteLine(
+                $"HoYoverse code fetch failed for {game.Slug}: " +
+                $"{ex.GetType().Name}: {ex.Message}");
+
             return;
         }
 
-        bool initialized = await _repository.IsCodeStateInitializedAsync(game.Slug);
-        var storedCodes = await _repository.GetCodesAsync(game.Slug);
-        var currentSet = currentCodes.Select(x => x.Code).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        bool initialized =
+            await _repository.IsCodeStateInitializedAsync(game.Slug);
+
+        var storedCodes =
+            await _repository.GetCodesAsync(game.Slug);
+
+        var currentSet = currentCodes
+            .Select(x => x.Code)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         if (initialized)
         {
-            foreach (var code in currentCodes.Where(x => !storedCodes.Contains(x.Code)))
+            var newCodes = currentCodes
+                .Where(x => !storedCodes.Contains(x.Code))
+                .ToList();
+
+            foreach (var code in newCodes)
             {
                 string rewards = code.Rewards.Count > 0
                     ? $"\nRewards: {string.Join(", ", code.Rewards)}"
                     : string.Empty;
 
-                await _client.Rest.SendMessageAsync(
-                    game.ChannelSelector(config),
-                    $"<@&{game.RoleSelector(config)}> **New {game.DisplayName} redemption code:** `{code.Code}`{rewards}");
+                foreach (var config in configs)
+                {
+                    await _client.Rest.SendMessageAsync(
+                        game.ChannelSelector(config),
+                        $"<@&{game.RoleSelector(config)}> " +
+                        $"**New {game.DisplayName} redemption code:** " +
+                        $"`{code.Code}`{rewards}");
+                }
             }
         }
 
-        // The table is a snapshot of currently active codes, not a permanent history.
-        await _repository.ReplaceCodesAsync(game.Slug, currentSet);
+        // Only update the global snapshot AFTER all configured
+        // servers have received any new-code notifications.
+        await _repository.ReplaceCodesAsync(
+            game.Slug,
+            currentSet);
     }
 
     private async Task CheckEventsAsync(
-        HoyoverseNotificationConfig config,
+        IReadOnlyCollection<HoyoverseNotificationConfig> configs,
         GameDefinition game,
         CancellationToken cancellationToken)
     {
         IReadOnlyList<HoyoverseEvent> events;
+
         try
         {
-            events = await _apiClient.GetEventsAsync(game.Slug, cancellationToken);
+            events = await _apiClient.GetEventsAsync(
+                game.Slug,
+                cancellationToken);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"HoYoverse calendar fetch failed for {game.Slug}: {ex.GetType().Name}");
+            Console.WriteLine(
+                $"HoYoverse calendar fetch failed for {game.Slug}: " +
+                $"{ex.GetType().Name}: {ex.Message}");
+
             return;
         }
 
         var now = DateTimeOffset.UtcNow;
+
         foreach (var gameEvent in events)
         {
             if (gameEvent.EndTime <= now)
                 continue;
 
-            var warningStart = gameEvent.EndTime - EventWarningLeadTime;
+            var warningStart =
+                gameEvent.EndTime - EventWarningLeadTime;
+
             if (now < warningStart)
                 continue;
 
-            if (await _repository.WasEventWarningSentAsync(game.Slug, gameEvent.EventId, gameEvent.EndTime))
+            if (await _repository.WasEventWarningSentAsync(
+                    game.Slug,
+                    gameEvent.EventId,
+                    gameEvent.EndTime))
+            {
                 continue;
+            }
 
             var remaining = gameEvent.EndTime - now;
+
             string remainingText = remaining.TotalDays >= 1
                 ? $"{Math.Ceiling(remaining.TotalDays):0} day(s)"
                 : $"{Math.Max(1, Math.Ceiling(remaining.TotalHours)):0} hour(s)";
 
-            await _client.Rest.SendMessageAsync(
-                game.ChannelSelector(config),
-                $"<@&{game.RoleSelector(config)}> **{gameEvent.Name}** in {game.DisplayName} ends in about {remainingText}. " +
-                $"Make sure you finish it and claim your rewards before it ends.");
+            foreach (var config in configs)
+            {
+                await _client.Rest.SendMessageAsync(
+                    game.ChannelSelector(config),
+                    $"<@&{game.RoleSelector(config)}> " +
+                    $"**{gameEvent.Name}** in {game.DisplayName} " +
+                    $"ends in about {remainingText}. " +
+                    $"Make sure you finish it and claim your rewards " +
+                    $"before it ends.");
+            }
 
-            await _repository.MarkEventWarningSentAsync(game.Slug, gameEvent.EventId, gameEvent.EndTime);
+            // Mark globally only after all configured servers
+            // have received the notification.
+            await _repository.MarkEventWarningSentAsync(
+                game.Slug,
+                gameEvent.EventId,
+                gameEvent.EndTime);
         }
     }
 

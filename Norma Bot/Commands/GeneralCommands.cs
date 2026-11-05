@@ -1,8 +1,89 @@
 ﻿using Fluxer.Net.Commands;
-using Fluxer.Net.Rest;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 public class GeneralCommands : ModuleBase
 {
+    #region Attachment Upload Classes
+    public sealed class AttachmentUploadRequest
+    {
+        [JsonProperty("attachments")]
+        public List<AttachmentUploadRequestItem> Attachments { get; set; } = [];
+    }
+
+    public sealed class AttachmentUploadRequestItem
+    {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        [JsonProperty("filename")]
+        public string Filename { get; set; } = string.Empty;
+
+        [JsonProperty("file_size")]
+        public long FileSize { get; set; }
+
+        [JsonProperty("content_type")]
+        public string ContentType { get; set; } = string.Empty;
+    }
+
+    public sealed class AttachmentUploadResponse
+    {
+        [JsonProperty("attachments")]
+        public List<AttachmentUploadResponseItem> Attachments { get; set; } = [];
+    }
+
+    public sealed class AttachmentUploadResponseItem
+    {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        [JsonProperty("filename")]
+        public string Filename { get; set; } = string.Empty;
+
+        [JsonProperty("upload_filename")]
+        public string UploadFilename { get; set; } = string.Empty;
+
+        [JsonProperty("file_size")]
+        public long FileSize { get; set; }
+
+        [JsonProperty("content_type")]
+        public string ContentType { get; set; } = string.Empty;
+
+        [JsonProperty("upload_mode")]
+        public string UploadMode { get; set; } = string.Empty;
+
+        [JsonProperty("upload_url")]
+        public string? UploadUrl { get; set; }
+    }
+
+    public sealed class PreUploadedAttachment
+    {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        [JsonProperty("filename")]
+        public string Filename { get; set; } = string.Empty;
+
+        [JsonProperty("upload_filename")]
+        public string UploadFilename { get; set; } = string.Empty;
+
+        [JsonProperty("file_size")]
+        public long FileSize { get; set; }
+
+        [JsonProperty("content_type")]
+        public string ContentType { get; set; } = string.Empty;
+
+        [JsonProperty("flags")]
+        public int Flags { get; set; }
+    }
+
+    public sealed class CreateMessageRequest
+    {
+        [JsonProperty("attachments")]
+        public List<PreUploadedAttachment> Attachments { get; set; } = [];
+    }
+    #endregion
+
     [Command("help")]
     public async Task HelpAsync()
     {
@@ -34,7 +115,6 @@ public class GeneralCommands : ModuleBase
         await ReplyAsync($"{senderName} bonked {targetName}!");
     }
 
-    private static readonly string SexImagesPath = "Images/SexCommand/";
     private static readonly string[] SexImages =
     [
         "NormaSex1.jpg",
@@ -57,7 +137,8 @@ public class GeneralCommands : ModuleBase
 
         string filePath = Path.Combine(
             AppContext.BaseDirectory,
-            "Images/SexCommand",
+            "Images",
+            "SexCommand",
             fileName);
 
         if (!File.Exists(filePath))
@@ -66,23 +147,94 @@ public class GeneralCommands : ModuleBase
                 $"Random picture could not be found: {filePath}");
 
             await ReplyAsync(
-                "Couldn't find the selected image.");
+                "No! I won't have sex with you right now.");
 
             return;
         }
 
         try
         {
-            var attachment = new AttachmentRequest(filePath)
+            string contentType = Path.GetExtension(filePath).ToLowerInvariant() switch
             {
-                Flags = Fluxer.Net.AttachmentFlag.IsSpoiler
+                ".png" => "image/png",
+                ".jpg" or ".jpeg" => "image/jpeg",
+                ".webp" => "image/webp",
+                ".gif" => "image/gif",
+                _ => "application/octet-stream"
             };
 
-            await ReplyAsync(
-                attachments:
+            var fileInfo = new FileInfo(filePath);
+
+            var uploadRequest = new AttachmentUploadRequest
+            {
+                Attachments =
                 [
-                    attachment
-                ]);
+                    new AttachmentUploadRequestItem
+                {
+                    Id = 0,
+                    Filename = fileName,
+                    FileSize = fileInfo.Length,
+                    ContentType = contentType
+                }
+                ]
+            };
+
+            var uploadResponse =
+                await Context.Client.Rest
+                    .UploadAttachmentsAsync<
+                        AttachmentUploadRequest,
+                        AttachmentUploadResponse>(
+                            Context.Channel.Id,
+                            uploadRequest);
+
+            var upload = uploadResponse.Attachments.Single();
+
+            if (upload.UploadMode != "singlepart" ||
+                string.IsNullOrWhiteSpace(upload.UploadUrl))
+            {
+                throw new InvalidOperationException(
+                    "Fluxer did not return a singlepart upload URL.");
+            }
+
+            using var uploadClient = new HttpClient();
+
+            await using var fileStream = File.OpenRead(filePath);
+
+            using var uploadContent =
+                new StreamContent(fileStream);
+
+            uploadContent.Headers.ContentType =
+                new MediaTypeHeaderValue(contentType);
+
+            using var uploadResult =
+                await uploadClient.PutAsync(
+                    upload.UploadUrl,
+                    uploadContent);
+
+            uploadResult.EnsureSuccessStatusCode();
+
+            var messageRequest = new CreateMessageRequest
+            {
+                Attachments =
+                [
+                    new PreUploadedAttachment
+                {
+                    Id = upload.Id,
+                    Filename = upload.Filename,
+                    UploadFilename = upload.UploadFilename,
+                    FileSize = upload.FileSize,
+                    ContentType = upload.ContentType,
+
+                    // IS_SPOILER = 1 << 3
+                    Flags = 8
+                }
+                ]
+            };
+
+            await Context.Client.Rest.SendRequestAsync<object, CreateMessageRequest>(
+                HttpMethod.Post,
+                $"/channels/{Context.Channel.Id}/messages",
+                messageRequest);
         }
         catch (Exception ex)
         {

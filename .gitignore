@@ -1,9 +1,16 @@
+# Visual Studio
 .vs/
-bin/
-obj/
-
 *.user
 *.suo
 
+# .NET build output
+bin/
+obj/
+
+# Environment/secrets
 .env
 .env.*
+
+# OS/editor files
+.DS_Store
+Thumbs.db

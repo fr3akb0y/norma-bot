@@ -17,4 +17,15 @@
     <PackageReference Include="Npgsql" Version="10.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Images\SexCommand\" />
+  </ItemGroup>
+
+<ItemGroup>
+	<Content Include="Images\**\*">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	</Content>
+</ItemGroup>
+
 </Project>

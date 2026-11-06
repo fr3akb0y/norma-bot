@@ -1,4 +1,5 @@
-﻿using Fluxer.Net.Commands;
+using Fluxer.Net;
+using Fluxer.Net.Commands;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 

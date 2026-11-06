@@ -94,7 +94,7 @@ public class GeneralCommands : ModuleBase
             `!sex`
             """;
     
-        if (await EnsureAdministratorAsync())
+        if (IsGuildAdmin())
         {
             helpMessage += """
             

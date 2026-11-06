@@ -266,19 +266,6 @@ public class GeneralCommands : ModuleBase
         }
     }
 
-    private async Task<bool> EnsureAdministratorAsync()
-    {
-        if (!IsGuildAdmin())
-        {
-            await ReplyAsync(
-                "You need the Administrator permission to use this command."
-            );
-            return false;
-        }
-
-        return true;
-    }
-
     private bool IsGuildAdmin()
     {
         if (Context.Guild == null || Context.Member == null)

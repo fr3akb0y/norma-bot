@@ -87,9 +87,28 @@ public class GeneralCommands : ModuleBase
     [Command("help")]
     public async Task HelpAsync()
     {
-        await ReplyAsync("Here are all available commands:\n`!help`\n`!bonk @Someone`");
+        string helpMessage = """
+            Here are all available commands:
+            `!help`
+            `!bonk @someone`
+            `!sex`
+            """;
+    
+        if (await EnsureAdministratorAsync())
+        {
+            helpMessage += """
+            
+            Admin commands:
+            `!setuproles #roles TEXT`
+            `!addreactionrole MESSAGE_ID EMOJI @Role`
+            `!setuphoyo #genshin #starrail #zenless @genshin @starrail @zenless`
+            `!checkhoyo` <- Does the hourly check manually to look for ending events and new codes
+            """;
+        }
+    
+        await ReplyAsync(helpMessage);
     }
-
+    
     [Command("bonk", ignoreExtraArgs: true)]
     public async Task BonkAsync()
     {
@@ -245,5 +264,29 @@ public class GeneralCommands : ModuleBase
             await ReplyAsync(
                 "Something went wrong while sending the image.");
         }
+    }
+
+    private async Task<bool> EnsureAdministratorAsync()
+    {
+        if (!IsGuildAdmin())
+        {
+            await ReplyAsync(
+                "You need the Administrator permission to use this command."
+            );
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool IsGuildAdmin()
+    {
+        if (Context.Guild == null || Context.Member == null)
+            return false;
+
+        if (Context.Guild.OwnerId == Context.User.Id)
+            return true;
+
+        return Context.Member.HasPermission(GuildPermission.Administrator);
     }
 }

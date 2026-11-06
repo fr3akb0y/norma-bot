@@ -98,6 +98,7 @@ public class GeneralCommands : ModuleBase
         if (IsGuildAdmin())
         {
             helpMessage += """
+
             
             Admin commands:
             `!setuproles #roles TEXT`

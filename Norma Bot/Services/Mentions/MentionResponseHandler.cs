@@ -19,14 +19,16 @@ public static class MentionResponseHandler
             return;
 
         bool mentionsNorma =
-            message.Mentions?.Any(x => x.Id == client.User.Id) == true;
+            message.Mentions?.Any(
+                x => x.Id == client.User.Id) == true;
 
         if (!mentionsNorma)
             return;
 
-        string content = RemoveBotMention(
-            message.Content,
-            client.User.Id);
+        string content = message.Content
+            .Replace($"<@{client.User.Id}>", "")
+            .Replace($"<@!{client.User.Id}>", "")
+            .Trim();
 
         if (string.IsNullOrWhiteSpace(content))
         {
@@ -55,16 +57,6 @@ public static class MentionResponseHandler
 
             return;
         }
-    }
-
-    private static string RemoveBotMention(
-        string content,
-        ulong botId)
-    {
-        return content
-            .Replace($"<@{botId}>", "")
-            .Replace($"<@!{botId}>", "")
-            .Trim();
     }
 
     private static async Task SendRandomAsync(

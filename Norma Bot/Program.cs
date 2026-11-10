@@ -3,6 +3,7 @@ using Fluxer.Net.Commands;
 using Microsoft.Extensions.Configuration;
 using Norma_Bot.Data;
 using Norma_Bot.Services;
+using Norma_Bot.Services.Mentions;
 using Norma_Bot.Services.Hoyoverse;
 using Serilog;
 using System.Reflection;

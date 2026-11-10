@@ -52,7 +52,7 @@ public static class MentionResponses
             [
                 "Thank you :3",
                 "I know.",
-                "Flattery will get you nowhere."
+                "Flattery will get you nowhere.",
                 "Yes, I am!",
                 "Of course!"
             ]),
@@ -73,7 +73,7 @@ public static class MentionResponses
                 "Excuse me!?",
                 "How dare you insult my genius!",
                 "I am waaay smarter than you!"
-            ])
+            ]),
         #endregion
 
         #region Trying to flirt with her
@@ -92,7 +92,7 @@ public static class MentionResponses
                 "Stop flirting! I barely even know you!",
                 "Keep that to yourself, please.",
                 "Aww. I don't want to hurt your feelings but please stop that."
-            ])
+            ]),
         #endregion
 
         #region Trying to date her
@@ -111,7 +111,7 @@ public static class MentionResponses
                 "Eh. I don't think that is a good idea.",
                 "My schedule is already full, sorry.",
                 "Is that a lonely bangboo over there? Sorry, have to go!"
-            ])
+            ]),
         #endregion
 
         #region Trying to sex her
@@ -123,7 +123,7 @@ public static class MentionResponses
                 "i wanna fuck you",
                 "i want to fuck",
                 "fuck me",
-                "wanna rape you"
+                "wanna rape you",
                 "want to rape you"
             ],
             Responses:

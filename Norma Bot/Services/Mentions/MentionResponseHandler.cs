@@ -9,6 +9,11 @@ public static class MentionResponseHandler
         FluxerClient client,
         SocketMessage message)
     {
+        var currentUser = client.Gateway.CurrentUser;
+
+        if (currentUser is null)
+            return;
+
         if (message.Author == null || message.Author.IsBot)
             return;
 
@@ -19,15 +24,14 @@ public static class MentionResponseHandler
             return;
 
         bool mentionsNorma =
-            message.Mentions?.Any(
-                x => x.Id == client.User.Id) == true;
+            message.Mentions?.Any(x => x.Id == currentUser.Id) == true;
 
         if (!mentionsNorma)
             return;
 
         string content = message.Content
-            .Replace($"<@{client.User.Id}>", "")
-            .Replace($"<@!{client.User.Id}>", "")
+            .Replace($"<@{currentUser.Id}>", "")
+            .Replace($"<@!{currentUser.Id}>", "")
             .Trim();
 
         if (string.IsNullOrWhiteSpace(content))

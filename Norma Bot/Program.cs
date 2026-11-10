@@ -92,6 +92,10 @@ public class Program
 
         _client.Gateway.MessageCreated += async message =>
         {
+            await MentionResponseHandler.HandleAsync(
+                _client,
+                message);
+
             if (message.Author == null || message.Author.IsBot)
                 return;
 

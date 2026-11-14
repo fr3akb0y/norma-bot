@@ -1,7 +1,7 @@
 using Fluxer.Net;
 using Fluxer.Net.Commands;
-using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 public class GeneralCommands : ModuleBase
 {
@@ -266,6 +266,61 @@ public class GeneralCommands : ModuleBase
             await ReplyAsync(
                 "Something went wrong while sending the image.");
         }
+    }
+
+    [Command("updatemessage")]
+    public async Task UpdateMessageAsync(
+    ulong messageId,
+    params string[] newTextParts)
+    {
+        if (!await EnsureAdministratorAsync())
+            return;
+
+        if (newTextParts.Length == 0)
+        {
+            await ReplyAsync(
+                "Please provide the new message text.");
+
+            return;
+        }
+
+        string newText =
+            string.Join(" ", newTextParts)
+                .Replace("\\n", "\n");
+
+        try
+        {
+            await Context.Client.Rest.EditMessageAsync(
+                Context.Channel.Id,
+                messageId,
+                content: newText);
+
+            await ReplyAsync(
+                $"Message `{messageId}` updated.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(
+                $"Failed to update message {messageId}: " +
+                $"{ex.GetType().Name}: {ex.Message}");
+
+            await ReplyAsync(
+                "I couldn't update that message. " +
+                "Make sure the message ID is correct and that the message belongs to me.");
+        }
+    }
+
+    private async Task<bool> EnsureAdministratorAsync()
+    {
+        if (!IsGuildAdmin())
+        {
+            await ReplyAsync(
+                "You need the Administrator permission to use this command."
+            );
+            return false;
+        }
+
+        return true;
     }
 
     private bool IsGuildAdmin()

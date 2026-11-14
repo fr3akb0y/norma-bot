@@ -3,6 +3,8 @@ using Fluxer.Net.Commands;
 using Microsoft.Extensions.Configuration;
 using Norma_Bot.Data;
 using Norma_Bot.Services;
+using Norma_Bot.Services.GameNotifications;
+using Norma_Bot.Services.GameNotifications.Providers;
 using Norma_Bot.Services.Mentions;
 using Norma_Bot.Services.Hoyoverse;
 using Serilog;
@@ -83,6 +85,8 @@ public class Program
             new HttpClient { Timeout = TimeSpan.FromSeconds(30) },
             hoyoverseApiBaseUrl);
 
+        #region Register Reminder/Code Services
+
         BotServices.HoyoverseNotifications = new HoyoverseNotificationService(
             _client,
             hoyoverseApiClient,
@@ -90,6 +94,94 @@ public class Program
 
         _commands = new CommandService();
         await _commands.AddModulesAsync(Assembly.GetExecutingAssembly());
+
+        var httpClient = new HttpClient
+        {
+            Timeout = TimeSpan.FromSeconds(30)
+        };
+
+        string gameScheduleBaseUrl =
+            configuration["Games:GameScheduleBaseUrl"]
+            ?? string.Empty;
+
+        string stellaSoraBaseUrl =
+            configuration["Games:StellaSoraBaseUrl"]
+            ?? string.Empty;
+
+        var gameProviders = new List<IGameProvider>
+        {
+            new OpenGachaCodesProvider(
+                httpClient,
+                "wuwa",
+                "Wuthering Waves"),
+
+            new OpenGachaCodesProvider(
+                httpClient,
+                "endfield",
+                "Arknights: Endfield")
+        };
+
+        if (!string.IsNullOrWhiteSpace(gameScheduleBaseUrl))
+        {
+            gameProviders.Add(
+                new GameScheduleProvider(
+                    httpClient,
+                    gameScheduleBaseUrl,
+                    "mc",
+                    "wuwa",
+                    "Wuthering Waves"));
+
+            gameProviders.Add(
+                new GameScheduleProvider(
+                    httpClient,
+                    gameScheduleBaseUrl,
+                    "endfield",
+                    "endfield",
+                    "Arknights: Endfield"));
+
+            gameProviders.Add(
+                new GameScheduleProvider(
+                    httpClient,
+                    gameScheduleBaseUrl,
+                    "ba",
+                    "bluearchive",
+                    "Blue Archive"));
+
+            gameProviders.Add(
+                new GameScheduleProvider(
+                    httpClient,
+                    gameScheduleBaseUrl,
+                    "nikke",
+                    "nikke",
+                    "Goddess of Victory: NIKKE"));
+        }
+
+        if (!string.IsNullOrWhiteSpace(stellaSoraBaseUrl))
+        {
+            gameProviders.Add(
+                new StellaSoraProvider(
+                    httpClient,
+                    stellaSoraBaseUrl));
+        }
+
+        var gameProviderRegistry =
+            new GameProviderRegistry(gameProviders);
+
+        var gameNotificationRepository =
+            new GameNotificationRepository(databaseConnectionString);
+
+        await gameNotificationRepository.InitializeAsync();
+
+        BotServices.GameNotificationRepository =
+            gameNotificationRepository;
+
+        BotServices.GameNotifications =
+            new GameNotificationService(
+                _client,
+                gameProviderRegistry,
+                gameNotificationRepository);
+
+        #endregion
 
         _client.Gateway.MessageCreated += async message =>
         {
@@ -134,10 +226,8 @@ public class Program
 
         Console.WriteLine("StartAsync completed.");
 
-        // The current app is a plain console process rather than a Generic Host, so a
-        // PeriodicTimer-style background task is enough. If the app is later migrated to
-        // Microsoft.Extensions.Hosting, this service can become a BackgroundService.
         _ = BotServices.HoyoverseNotifications.RunAsync();
+        _ = BotServices.GameNotifications.RunAsync();
 
         await Task.Delay(-1);
     }

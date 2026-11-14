@@ -99,12 +99,39 @@ public class GeneralCommands : ModuleBase
         {
             helpMessage += """
 
-            
-            Admin commands:
+
+            **Admin commands**
+
+            Reaction roles:
             `!setuproles #roles TEXT`
             `!addreactionrole MESSAGE_ID EMOJI @Role`
+            `!updatemessage MESSAGE_ID NEW_TEXT`
+
+            HoYoverse notifications:
             `!setuphoyo #genshin #starrail #zenless @genshin @starrail @zenless`
-            `!checkhoyo` <- Does the hourly check manually to look for ending events and new codes
+            `!checkhoyo`
+            -> Runs the HoYoverse event/code check manually.
+
+            Other game notifications:
+            `!setupgame GAME #channel @Role`
+            `!checkgame GAME`
+            `!checkgames`
+
+            Supported game names:
+            `wuwa` <- Wuthering Waves
+            `endfield` <- Arknights: Endfield
+            `bluearchive` <- Blue Archive
+            `nikke` <- Nikke
+            `stella` <- Stella Sora
+
+            `!setupgame`
+            -> Configures the notification channel and role for one game. (except Hoyoverse)
+
+            `!checkgame`
+            -> Runs the event/code check manually for one game. (except Hoyoverse)
+
+            `!checkgames`
+            -> Runs the event/code check manually for all configured games. (except Hoyoverse)
             """;
         }
     

@@ -6,8 +6,8 @@ namespace Norma_Bot.Services.GameNotifications
 {
     public sealed class GameNotificationService
     {
-        private static readonly TimeSpan EventWarningLeadTime =
-            TimeSpan.FromDays(3);
+        private static readonly TimeSpan PollInterval = TimeSpan.FromHours(1);
+        private static readonly TimeSpan EventWarningLeadTime = TimeSpan.FromDays(3);
 
         private readonly FluxerClient _client;
         private readonly GameProviderRegistry _providers;
@@ -187,9 +187,6 @@ namespace Norma_Bot.Services.GameNotifications
                     gameEvent.EndTime);
             }
         }
-
-        private static readonly TimeSpan PollInterval =
-    TimeSpan.FromHours(1);
 
         public async Task RunAsync(
             CancellationToken cancellationToken = default)

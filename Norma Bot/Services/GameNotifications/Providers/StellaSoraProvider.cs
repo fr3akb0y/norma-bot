@@ -33,21 +33,36 @@ public sealed class StellaSoraProvider : IGameProvider
         CancellationToken cancellationToken = default)
     {
         var response =
-            await _httpClient.GetFromJsonAsync<List<ApiEvent>>(
+            await _httpClient.GetFromJsonAsync<ApiResponse>(
                 $"{_baseUrl}/stella/events?lang=EN",
                 cancellationToken);
 
         if (response is null)
             return [];
 
-        return response
-            .Where(x => x.EndTime > 0)
+        // For reminders we only care about events that are
+        // currently active or scheduled to start soon.
+        return response.Current
+            .Concat(response.Upcoming)
+            .Where(x => x.EndTime > DateTimeOffset.UtcNow)
             .Select(x => new GameEvent(
                 x.Id.ToString(),
-                x.Name,
-                DateTimeOffset.FromUnixTimeSeconds(x.StartTime),
-                DateTimeOffset.FromUnixTimeSeconds(x.EndTime)))
+                x.Title,
+                x.StartTime,
+                x.EndTime))
             .ToList();
+    }
+
+    private sealed class ApiResponse
+    {
+        [JsonPropertyName("current")]
+        public List<ApiEvent> Current { get; set; } = [];
+
+        [JsonPropertyName("upcoming")]
+        public List<ApiEvent> Upcoming { get; set; } = [];
+
+        [JsonPropertyName("ended")]
+        public List<ApiEvent> Ended { get; set; } = [];
     }
 
     private sealed class ApiEvent
@@ -55,13 +70,13 @@ public sealed class StellaSoraProvider : IGameProvider
         [JsonPropertyName("id")]
         public long Id { get; set; }
 
-        [JsonPropertyName("name")]
-        public string Name { get; set; } = string.Empty;
+        [JsonPropertyName("title")]
+        public string Title { get; set; } = string.Empty;
 
-        [JsonPropertyName("start_time")]
-        public long StartTime { get; set; }
+        [JsonPropertyName("startTime")]
+        public DateTimeOffset StartTime { get; set; }
 
-        [JsonPropertyName("end_time")]
-        public long EndTime { get; set; }
+        [JsonPropertyName("endTime")]
+        public DateTimeOffset EndTime { get; set; }
     }
 }

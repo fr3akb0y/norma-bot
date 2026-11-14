@@ -2,6 +2,7 @@ using Fluxer.Net;
 using Fluxer.Net.Commands;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 
 public class GeneralCommands : ModuleBase
 {
@@ -105,7 +106,8 @@ public class GeneralCommands : ModuleBase
             Reaction roles:
             `!setuproles #roles TEXT`
             `!addreactionrole MESSAGE_ID EMOJI @Role`
-            `!updatemessage MESSAGE_ID NEW_TEXT`
+            `!updatemessage #channel MESSAGE_ID NEW_TEXT`
+            -> You need to provide the channel where the message is located in
 
             HoYoverse notifications:
             `!setuphoyo #genshin #starrail #zenless @genshin @starrail @zenless`
@@ -291,6 +293,7 @@ public class GeneralCommands : ModuleBase
 
     [Command("updatemessage")]
     public async Task UpdateMessageAsync(
+    string channelMention,
     ulong messageId,
     params string[] newTextParts)
     {
@@ -299,35 +302,31 @@ public class GeneralCommands : ModuleBase
 
         if (newTextParts.Length == 0)
         {
-            await ReplyAsync(
-                "Please provide the new message text.");
-
+            await ReplyAsync("Please provide the new message text.");
             return;
         }
 
-        string newText =
-            string.Join(" ", newTextParts)
-                .Replace("\\n", "\n");
+        if (!TryGetChannelId(channelMention, out ulong channelId))
+        {
+            await ReplyAsync("Please provide a valid channel mention.");
+            return;
+        }
+
+        string newText = string.Join(" ", newTextParts)
+            .Replace("\\n", "\n");
 
         try
         {
             await Context.Client.Rest.EditMessageAsync(
-                Context.Channel.Id,
+                channelId,
                 messageId,
                 content: newText);
 
-            await ReplyAsync(
-                $"Message `{messageId}` updated.");
+            await ReplyAsync($"Message `{messageId}` updated.");
         }
         catch (Exception ex)
         {
-            Console.WriteLine(
-                $"Failed to update message {messageId}: " +
-                $"{ex.GetType().Name}: {ex.Message}");
-
-            await ReplyAsync(
-                "I couldn't update that message. " +
-                "Make sure the message ID is correct and that the message belongs to me.");
+            await ReplyAsync($"Failed to update message: {ex.Message}");
         }
     }
 
@@ -354,4 +353,27 @@ public class GeneralCommands : ModuleBase
 
         return Context.Member.HasPermission(GuildPermission.Administrator);
     }
+
+    private bool TryGetChannelId(string mention, out ulong channelId)
+    {
+        channelId = 0;
+
+        return Context.Guild is not null &&
+               TryParseMentionId(
+                   ChannelMentionRegex,
+                   mention,
+                   out channelId) &&
+               Context.Guild.Channels.ContainsKey(channelId);
+    }
+
+    private static bool TryParseMentionId(Regex regex, string value, out ulong id)
+    {
+        id = 0;
+        var match = regex.Match(value.Trim());
+        return match.Success && ulong.TryParse(match.Groups["id"].Value, out id);
+    }
+
+    private static readonly Regex ChannelMentionRegex = new(
+        @"^<#(?<id>\d+)>$",
+        RegexOptions.Compiled);
 }

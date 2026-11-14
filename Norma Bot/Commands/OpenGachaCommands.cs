@@ -10,10 +10,6 @@ public class OpenGachaCommands : ModuleBase
         @"^<#(?<id>\d+)>$",
         RegexOptions.Compiled);
 
-    private static readonly Regex RoleMentionRegex = new(
-        @"^<@&(?<id>\d+)>$",
-        RegexOptions.Compiled);
-
     [Command("setupgame")]
     public async Task SetupGameAsync(
     string game,
@@ -37,18 +33,27 @@ public class OpenGachaCommands : ModuleBase
             return;
         }
 
-        if (!TryGetRoleId(roleMention, out ulong roleId))
+        ulong? roleId = Context.Message.MentionRoles?.FirstOrDefault();
+
+        if (roleId is null || roleId == 0)
         {
             await ReplyAsync("Please provide a valid role mention.");
             return;
         }
 
+        if (Context.Guild is null ||
+            !Context.Guild.Roles.ContainsKey(roleId.Value))
+        {
+            await ReplyAsync("I couldn't find that role on this server.");
+            return;
+        }
+
         await BotServices.GameNotificationRepository.SaveConfigAsync(
             new GameNotificationConfig(
-                Context.Guild!.Id,
+                Context.Guild.Id,
                 game,
                 channelId,
-                roleId));
+                roleId.Value));
 
         await ReplyAsync(
             $"Notifications for `{game}` have been configured.");
@@ -119,17 +124,5 @@ public class OpenGachaCommands : ModuleBase
                    mention,
                    out channelId) &&
                Context.Guild.Channels.ContainsKey(channelId);
-    }
-
-    private bool TryGetRoleId(string mention, out ulong roleId)
-    {
-        roleId = 0;
-
-        return Context.Guild is not null &&
-               TryParseMentionId(
-                   RoleMentionRegex,
-                   mention,
-                   out roleId) &&
-               Context.Guild.Roles.ContainsKey(roleId);
     }
 }

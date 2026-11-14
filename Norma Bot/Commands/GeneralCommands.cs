@@ -114,8 +114,11 @@ public class GeneralCommands : ModuleBase
 
             Other game notifications:
             `!setupgame GAME #channel @Role`
+            -> Configures the notification channel and role for one game. (except Hoyoverse)
             `!checkgame GAME`
+            -> Runs the event/code check manually for one game. (except Hoyoverse)
             `!checkgames`
+            -> Runs the event/code check manually for all configured games. (except Hoyoverse)
 
             Supported game names:
             `wuwa` <- Wuthering Waves
@@ -123,15 +126,6 @@ public class GeneralCommands : ModuleBase
             `bluearchive` <- Blue Archive
             `nikke` <- Nikke
             `stella` <- Stella Sora
-
-            `!setupgame`
-            -> Configures the notification channel and role for one game. (except Hoyoverse)
-
-            `!checkgame`
-            -> Runs the event/code check manually for one game. (except Hoyoverse)
-
-            `!checkgames`
-            -> Runs the event/code check manually for all configured games. (except Hoyoverse)
             """;
         }
     

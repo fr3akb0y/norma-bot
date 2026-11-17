@@ -135,6 +135,61 @@ public static class MentionResponses
                 "Hello? PubSec? Is anyone nearby? HELP!",
                 "Get the fuck away from me!",
                 "Kindly fuck off!"
+            ]),
+        #endregion
+
+        #region Being Lazy response
+        new(
+            Keywords:
+            [
+                "do something",
+                "are you working",
+                "are you broken"
+            ],
+            Responses:
+            [
+                "Hey! I am doing my best over here!",
+                "Let me continue my work in peace, please.",
+                "I am doing something. Stop bothering me."
+            ]),
+        #endregion
+
+        #region Vulgular Words response
+        new(
+            Keywords:
+            [
+                "pussy",
+                "cock",
+                "vagina",
+                "penis",
+                "dick"
+            ],
+            Responses:
+            [
+                "Stop saying that or I am gonna be very angry!",
+                "Ew. What are you even saying???",
+                "Can you go and annoy someone else?",
+                "You can't be serious right now...",
+                "Don't say this shit!"
+            ]),
+        #endregion
+
+        #region Hate response
+        new(
+            Keywords:
+            [
+                "hate you",
+                "you suck",
+                "i dont like you",
+                "despise you"
+            ],
+            Responses:
+            [
+                "I don't like you either! Hmph.",
+                "It's not like I liked you at any point. Stupid.",
+                "No way a worm like you is even likeable!",
+                "I don't care how you see me. You have no right to even look at me!",
+                "Will you fuck off then!?"
             ])
         #endregion
     ];
